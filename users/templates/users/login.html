@@ -1,0 +1,80 @@
+{% load static %}
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ShareHub</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="{% static 'users/register.css' %}">
+  <style>
+    /* Add custom styles if needed */
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg  fixed-top">
+    <a class="navbar-brand" href="#"><img class="logo" src="{% static 'users/logo.png' %}" alt="Logo" height="47"> ShareHub</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Log In</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Register</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <hr>
+  
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-6 left-container container-half">
+        <div class="inner-container">
+          <h1>Welcome to ShareHub</h1>
+          <p>A platform to share your files</p>
+        </div>
+        <div class="inner-container">
+          <img  src="{% static 'users/landing_page_pic.png' %}" alt="Image">
+        </div>
+      </div>
+      <div class="col-6 right-container container-half">
+        <!-- Content for the right container -->
+        <div class="form-section">
+            <div>
+                <form method="POST">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-2">Join ShareHub Today</legend>
+                        {{ form|crispy }}
+                    </fieldset>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary">Sign Up</button>
+                    </div>
+                </form>
+                <div class="border-top pt-1">
+                    <small class="text-muted">
+                        Already Have An Account? <a href="#" class="ml-2">Sign In</a>
+                    </small>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+
+    
+    
