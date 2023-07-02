@@ -1,0 +1,47 @@
+#side_navbar{
+  background-image: url("landing_page_bg.jpg");
+}
+
+.logo{
+  filter: invert(100%);
+}
+
+.logo_name{
+  margin-left: 10px;
+  margin-top: 5px;
+}
+
+#logo_heading{
+  margin-top: 10px;
+}
+/* hr {
+  border: none;
+  border-top: 5px solid rgb(19, 7, 7);
+  margin-top: 76px;
+  z-index: 1;
+} */
+
+
+
+/* @media (max-width: 767px) {
+  #logo_name{
+    display: none;
+  }
+} */
+
+@media (max-width: 576px) {
+  .logo_name {
+      display: none;
+  }
+}
+
+#menu .nav-link {
+  color: white;
+}
+
+@media (max-width: 576px) {
+  /* Apply styles for screens with a maximum width of 576px */
+  .sidebar_items li a {
+      padding-left: 0;
+  }
+}
