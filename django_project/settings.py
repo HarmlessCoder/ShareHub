@@ -34,6 +34,10 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'file_share.apps.FileShareConfig',
+
+    # 'users',
+    # 'filesharing',
+
     'crispy_forms',
     'crispy_bootstrap4',
     'django.contrib.admin',
@@ -120,11 +124,15 @@ USE_I18N = True
 
 USE_TZ = True
 
+# USE_L10N = True
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+LOGIN_REDIRECT_URL = 'home/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

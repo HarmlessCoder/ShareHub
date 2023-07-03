@@ -45,23 +45,7 @@
         <!-- Content for the right container -->
         <div class="form-section">
             <div>
-                <form method="POST">
-                    {% csrf_token %}
-                    <fieldset class="form-group">
-                      {% if messages %}
-                      {% for message in messages %}
-                          <div class="alert alert-{{message.tags}}">
-                              {{message}}
-                          </div>
-                      {% endfor %}
-                    {% endif %}
-                        <legend class="border-bottom mb-2">Log In</legend>
-                        {{ form|crispy }}
-                    </fieldset>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Log In</button>
-                    </div>
-                </form>
+                <h2>You have been logged out</h2>
                 <div class="border-top pt-1">
                     <small class="text-muted">
                         Need An Account? <a class="ml-2" href="{% url 'register' %}" >Sign Up Now</a>

@@ -84,13 +84,14 @@ body {
 
   .form-section{
     padding: 10px 40px;
-    margin: 0px 40px;
+    margin: 130px 40px;
     /* background-color: rgb(134, 185, 226); */
     background-color: rgb(134, 185, 226);
     /* border: 5px solid rgb(10, 80, 150); */
     border: 7px solid rgb(9, 86, 174);
     /* border: 7px solid rgba(19, 68, 127, 0.797); */
     border-radius: 10px;
+    /* margin: auto; */
   }
 
   @media (max-width: 767px) {
@@ -110,5 +111,13 @@ body {
       margin-top: 10px; /* Increase or decrease as needed */
     }
   }
+/* .right-container{
+  border: 2px solid black;
+} */
 
+.form-section{
+  /* border: 2px solid red; */
+  margin-top: 130px;
+  margin-bottom: 130px;
+}
   

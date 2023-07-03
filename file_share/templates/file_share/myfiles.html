@@ -78,14 +78,6 @@
         </div>
         <div class="col py-3">
             <h3>Left Sidebar with Submenus</h3>
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-{{message.tags}}">
-                        {{message}}
-                    </div>
-                {% endfor %}
-            {% endif %}
-            
             <p class="lead">
                 An example 2-level sidebar with collasible menu items. The menu functions like an "accordion" where only a single 
                 menu is be open at a time. While the sidebar itself is not toggle-able, it does responsively shrink in width on smaller screens.</p>
