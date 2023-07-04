@@ -55,7 +55,7 @@
                         
                     </li>
                     <li>
-                        <a href="#submenu3" data-bs-toggle="collapse" class="pl-3 nav-link px-0 align-middle">
+                        <a href="{% url 'profile' %}" data-bs-toggle="collapse" class="pl-3 nav-link px-0 align-middle">
                             <i class="sidebar_list fs-4 bi-person-vcard-fill"></i> <span class="ms-2 d-none d-sm-inline">My Profile</span> </a>
                             
                     </li>
@@ -67,7 +67,7 @@
                         <span class="d-none d-sm-inline mx-1">loser</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-secondary text-small shadow" aria-labelledby="dropdownUser1">
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>

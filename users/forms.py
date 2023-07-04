@@ -18,14 +18,27 @@ class UserLoginForm(UserCreationForm):
         model = User
         fields = ['username','password1']
 
-class imageform(forms.ModelForm):
+class UserUpdateForm(forms.ModelForm):
+    email = forms.EmailField()
 
     class Meta:
-        model = profile
-        fields = ('image','profilename', )
+        model =User
+        fields = ['username','email']
 
-class profilecreate(forms.ModelForm):
-
+class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = profile
-        fields = ('image','profilename','DOB','college' )
+        fields = ['image'] 
+    
+
+# class imageform(forms.ModelForm):
+
+#     class Meta:
+#         model = profile
+#         fields = ('image','profilename', )
+
+# class profilecreate(forms.ModelForm):
+
+#     class Meta:
+#         model = profile
+#         fields = ('image','profilename','DOB','college' )

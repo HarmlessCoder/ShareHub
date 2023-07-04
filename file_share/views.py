@@ -11,8 +11,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 import zipfile
 import os, io
 from django.utils.text import slugify
+from django.contrib.auth.decorators import login_required
 
-
+@login_required
 def home(request):
     context={
         'posts': Post.objects.all()
@@ -22,8 +23,14 @@ def home(request):
 def about(request):
     return render(request,'file_share/about.html',{'title':'About'})
 
+def myfiles(request):
+    return render(request,'file_share/myfiles.html',{'tile' : 'myfiles'})
 
+def allusers(request):
+    return render(request,'file_share/allusers.html',{'tile' : 'allusers'})
 
+def favourite(request):
+    return render(request,'file_share/favourites.html',{'tile' : 'favourites'})
 
 # def starredfile(request,pk):
 #     file=File.objects.get(pk=pk)

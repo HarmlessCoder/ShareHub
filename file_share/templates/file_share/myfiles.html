@@ -1,5 +1,6 @@
 {% load static %}
 {% load crispy_forms_tags %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,6 +23,7 @@
         <title>ShareHub</title>
     {% endif %}
 </head>
+
 <body>
   <div class="container-fluid">
     <div class="row flex-nowrap">
@@ -35,55 +37,68 @@
                 </a>
                 
                 <ul class="sidebar_items nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                    <li class="nav-item active">
-                        <a href="#" class="pl-3 sidebar_list nav-link align-middle px-0">
+                    <li class="nav-item ">
+                        <a href="/home" class="pl-3 sidebar_list nav-link align-middle px-0">
                           <i class="fs-4 bi-house-fill"></i> <span class="ms-2 d-none d-sm-inline">Home</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#submenu1" data-bs-toggle="collapse" class="pl-3 nav-link px-0 align-middle">
+                    <li class="active">
+                        <a href="/myfiles" class="pl-3 nav-link px-0 align-middle">
                             <i class="sidebar_list fs-4 bi-file-earmark-fill"></i> <span class="ms-2 d-none d-sm-inline">My Files</span> </a>
           
                     </li>
                     <li>
-                        <a href="#" class="pl-3 nav-link px-0 align-middle">
+                        <a href="/favourites" class="pl-3 nav-link px-0 align-middle">
                             <i class="sidebar_list fs-4 bi-star-fill"></i> <span class="ms-2 d-none d-sm-inline">Favourites</span></a>
                     </li>
+
                     <li>
-                        <a href="#submenu2" data-bs-toggle="collapse" class="pl-3 nav-link px-0 align-middle ">
+                        <a href="/allusers" class="pl-3 nav-link px-0 align-middle">
                             <i class="sidebar_list fs-4 bi-people-fill"></i> <span class="ms-2 d-none d-sm-inline">All Users</span></a>
                         
                     </li>
                     <li>
-                        <a href="#submenu3" data-bs-toggle="collapse" class="pl-3 nav-link px-0 align-middle">
+                        <a href="{% url 'profile' %}" class="pl-3 nav-link px-0 align-middle">
                             <i class="sidebar_list fs-4 bi-person-vcard-fill"></i> <span class="ms-2 d-none d-sm-inline">My Profile</span> </a>
                             
                     </li>
                 </ul>
+
                 <hr>
                 <div class="dropdown pb-4">
                     <a href="#" class="pl-3 d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://github.com/mdo.png" alt="hugenerd" width="45" height="45" class="rounded-circle">
-                        <span class="d-none d-sm-inline mx-1">loser</span>
+                        <img src={{user.profile.image.url}} alt="profile Pic" width="45" height="45" class="rounded-circle">
+                        <span class="d-none d-sm-inline mx-1">{{ user.username }}</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-secondary text-small shadow" aria-labelledby="dropdownUser1">
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Log out</a></li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="col py-3">
+        <div class="rightmaindiv col py-3">
             <h3>Left Sidebar with Submenus</h3>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{message.tags}}">
+                        {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            
             <p class="lead">
                 An example 2-level sidebar with collasible menu items. The menu functions like an "accordion" where only a single 
                 menu is be open at a time. While the sidebar itself is not toggle-able, it does responsively shrink in width on smaller screens.</p>
             <ul class="list-unstyled">
                 <li><h5>Responsive</h5> shrinks in width, hides text labels and collapses to icons only on mobile</li>
+                
             </ul>
+            <h3>My Files</h3>
+            
         </div>
     </div>
 </div>

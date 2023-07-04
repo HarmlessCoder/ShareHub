@@ -57,6 +57,11 @@ class File(models.Model):
         super().delete(*args, **kwargs)
 
 
+
+
+
+
+
 class fav(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     sfile=models.ForeignKey(File,on_delete=models.CASCADE,default=None,null=True)

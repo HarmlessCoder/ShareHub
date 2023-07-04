@@ -7,10 +7,13 @@ urlpatterns = [
     
     path('about/', views.about,name='About'),
     path('home/', views.home,name='home'),
+    path('myfiles/',views.myfiles,name='myfiles'),
+    path('allusers/',views.allusers,name='allusers'),
+    path('favourites/',views.favourite,name='favourites'),
+    # path('profile/',views.profile,name='profile'),
 
+    # path('home/', views.home,name='home'),
     # path('home1',views.home1,name='home1'),
-    # path('allusers',views.allusers,name='allusers'),
-    # path('My_Files',views.My_Files,name='My_Files'),
     # path('uploadfile',views.uploadfile,name='uploadfile'),
     # path('<slug:user>',views.ousersfile,name='ousersfiles'),
     # path('My_Files/<int:pk>',views.FileDelete.as_view(),name='delete'),
