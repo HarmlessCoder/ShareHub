@@ -4,14 +4,18 @@ from django.shortcuts import render, redirect,reverse,get_object_or_404,HttpResp
 from django.urls import reverse_lazy
 from django.contrib import messages
 
-from .models import File,Folder,fav,Post
-from .forms import DocumentForm,FolderUploadForm,FolderForm
+from .models import Post
+from .models import File
+# from .models import File,Folder,fav,Post
+from .forms import FileForm
+# from .forms import DocumentForm,FolderUploadForm,FolderForm
 from django.views.generic.edit import FormView,DeleteView,UpdateView,CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 import zipfile
 import os, io
 from django.utils.text import slugify
 from django.contrib.auth.decorators import login_required
+
 
 @login_required
 def home(request):
@@ -23,102 +27,169 @@ def home(request):
 def about(request):
     return render(request,'file_share/about.html',{'title':'About'})
 
+@login_required
 def myfiles(request):
-    return render(request,'file_share/myfiles.html',{'tile' : 'myfiles'})
+    files=File.objects.filter(user=request.user)
+    return render(request,'file_share/myfiles.html',{'files':files},)
 
-def allusers(request):
-    return render(request,'file_share/allusers.html',{'tile' : 'allusers'})
+def upload_file(request):
+    if request.method == 'POST':
+        form = FileForm(request.POST, request.FILES)
+        if form.is_valid():
+            file = form.save(commit=False)
+            file.user = request.user
+            file.save()
+            return redirect('file_share:myfiles')
+    else:
+        form = FileForm()
+    return render(request, 'upload_file.html', {'form': form})
+
+def delete_file(request, file_id):
+    file = File.objects.get(id=file_id)
+    # file.file.delete()  # Delete the file from storage
+    file.delete()
+    return redirect('file_share:myfiles')
+
+# @login_required
+# def delete_file(request, file_id):
+#     file = get_object_or_404(File, id=file_id)
+#     if file.user == request.user:
+#         file.file.delete()  # Delete the file from storage
+#         file.delete()  # Delete the file object from the database
+#     return redirect('myfiles')
+
+
+def download_file(request, file_id):
+    file = get_object_or_404(File, id=file_id)
+    response = HttpResponse(file.file, content_type='application/force-download')
+    response['Content-Disposition'] = 'attachment; filename=%s' % file.file.name
+    return response
+
+def preview_file(request, file_id):
+    file = get_object_or_404(File, id=file_id)
+    return render(request, 'preview_file.html', {'file': file})
+
+
+@login_required
+def make_private(request, file_id):
+    file = get_object_or_404(File, id=file_id, user=request.user)
+    file.is_private = True
+    file.save()
+    return redirect('file_share:myfiles')
+
+@login_required
+def make_public(request, file_id):
+    file = get_object_or_404(File, id=file_id, user=request.user)
+    file.is_private = False
+    file.save()
+    return redirect('file_share:myfiles')
+
+# def allusers(request):
+#     all_users = User.objects.all()
+#     current_user = request.user
+#     return render(request, 'file_share/allusers.html', {'all_users': all_users, 'current_user': current_user})
+
+@login_required
+def otherusers(request):
+    ousers = User.objects.exclude(username=request.user.username)
+    context = {'ousers':ousers}
+    return render(request,'file_share/otherusers.html',context)
 
 def favourite(request):
-    return render(request,'file_share/favourites.html',{'tile' : 'favourites'})
+    return render(request,'file_share/favourites.html',{'title' : 'favourites'})
 
-# def starredfile(request,pk):
-#     file=File.objects.get(pk=pk)
-#     user = file.user
-#     try:
-#         f=fav.objects.get(user=request.user,sfile_id=file.id)
 
-#     except fav.DoesNotExist:
-#         f = fav(user=request.user, sfile_id=file.id)
-#         f.save()
-#     folder=file.folder
-#     if not folder:
-#      if user==request.user:
-#         return redirect('file_share:My_Files')
-#      else :
-#         return redirect('file_share:ousersfiles',user)
+
+
+
+
+
+# def My_Files(request):
+# def myfiles(request):
+#     user = request.user
+#     all_files = File.objects.filter(user=user)
+#     all_folders = Folder.objects.filter(user=user)
+#     top_folder = all_folders.filter(linkedfolder__isnull=True)
+#     top_file = all_files.filter(folder__isnull=True)
+#     f = fav.objects.filter(user=request.user)
+#     files = f
+
+#     fi = set(())
+#     fold = set(())
+#     for i in range(len(files)):
+#         if files[i].sfile:
+#             fi.add(files[i].sfile.id)
+#         elif files[i].sfolder:
+#             fold.add(files[i].sfolder.id)
+
+#     favfiles = []
+#     notfavfiles = []
+#     favfolders = []
+#     notfavfolders = []
+#     for i in range(len(top_file)):
+#         if top_file[i].id in fi:
+#             favfiles.append(top_file[i])
+#         else:
+#             notfavfiles.append(top_file[i])
+#     for i in range(len(top_folder)):
+#         if top_folder[i].id in fold:
+#             favfolders.append(top_folder[i])
+#         else:
+#             notfavfolders.append(top_folder[i])
+#     context = {'all_files': favfiles, 'notfav':notfavfiles,'all_folders': favfolders,'notfavfolders':notfavfolders}
+
+#     return render(request, 'file_share/MY_Files.html', context)
+
+
+# def uploadfile(request):
+#     if request.method =='POST':
+
+#             form = DocumentForm(request.POST, request.FILES)
+
+#             if form.is_valid():
+#                 for field in request.FILES.keys():
+#                     for formfile in request.FILES.getlist(field):
+#                         f = File(file=formfile, user=request.user)
+#                         f.name = f.filename()
+#                         f.save()
+#                 return redirect('file_share:My_Files')
+#             else:
+#                 return render(request, 'file_share/uploadfile.html', {'form': form})
 #     else:
-#      if user==request.user:
-#         return redirect('file_share:user-linked-files',folder.pk)
-#      else :
-#         return redirect('file_share:detail', folder.pk)
-# def starredfolder(request,pk):
+#             form = DocumentForm(None)
+#             return render(request, 'file_share/uploadfile.html', {'form': form})
+# def uploadlinkedfile(request,pk):
+#     if request.method == 'POST':
 
-#     folder = Folder.objects.get(pk=pk)
-#     user1 = folder.user
-#     try:
-#         f = fav.objects.get(user=request.user, sfolder_id=folder.id)
+#         form = DocumentForm(request.POST, request.FILES)
 
-#     except fav.DoesNotExist:
-#         f = fav(user=request.user, sfolder_id=folder.id)
-#         f.save()
-
-#     linkfolder = folder.linkedfolder
-
-#     f.save()
-
-#     if not linkfolder:
-#          if user1==request.user:
-#            return redirect('file_share:My_Files')
-#          else :
-#            return redirect('file_share:ousersfiles',user1)
+#         if form.is_valid():
+#             for field in request.FILES.keys():
+#                 for formfile in request.FILES.getlist(field):
+#                     f = File(file=formfile, user=request.user)
+#                     f.name = f.filename()
+#                     f.folder=Folder.objects.get(pk=pk)
+#                     f.save()
+#                     return redirect('file_share:user-linked-files', pk)
+#         else:
+#             return render(request, 'file_share/uploadfile.html', {'form': form})
 #     else:
-#         if user1==request.user:
-#          return redirect('file_share:user-linked-files',linkfolder.pk)
-#         else :
-#          return redirect('file_share:detail', linkfolder.pk)
-# def removestar(request,pk):
-#     file = File.objects.get(pk=pk)
-#     f=fav.objects.filter(user=request.user,sfile=file.id)
-#     f.delete()
-#     return redirect('file_share:home1')
-# def removestarfolder(request,pk):
-#     folder = Folder.objects.get(pk=pk)
-#     f = fav.objects.filter(user=request.user, sfolder=folder.id)
-#     f.delete()
-#     return redirect('file_share:home1')
-# def removestarstay(request,pk):
-#     file = File.objects.get(pk=pk)
-#     folder=file.folder
-#     user=file.user
-#     f = fav.objects.filter(user=request.user, sfile=file.id)
-#     f.delete()
-#     if not folder:
-#          if user==request.user:
-#            return redirect('file_share:My_Files')
-#          else :
-#            return redirect('file_share:ousersfiles',folder.user)
-#     else:
-#         if user==request.user:
-#          return redirect('file_share:user-linked-files',folder.pk)
-#         else :
-#          return redirect('file_share:detail', folder.pk)
-# def removestarstayfolder(request,pk):
-#     f = Folder.objects.get(pk=pk)
-#     folder = f.linkedfolder
-#     user=f.user
-#     foli = fav.objects.filter(user=request.user, sfolder=f.id)
-#     foli.delete()
-#     if not folder:
-#          if user==request.user:
-#            return redirect('file_share:My_Files')
-#          else :
-#            return redirect('file_share:ousersfiles',user)
-#     else:
-#         if user==request.user:
-#          return redirect('file_share:user-linked-files',folder.pk)
-#         else :
-#          return redirect('file_share:detail', folder.pk)
+#         form = DocumentForm(None)
+#         return render(request, 'file_share/uploadfile.html', {'form': form})
+# class FileDelete(DeleteView):
+#     model = File
+
+#     def get_success_url(self):
+#         f = File.objects.get(pk=self.kwargs['pk'])
+#         folder = f.folder
+#         if not folder:
+#             return reverse('file_share:My_Files')
+#         else:
+#             return reverse_lazy('file_share:user-linked-files',kwargs={'folder_id': folder.pk})
+
+#     def get(self, *args, **kwargs):
+#             return self.post(*args, **kwargs)
+
 # def user_details(request,folder_id):
 #     f = fav.objects.filter(user=request.user)
 #     files = f
@@ -246,92 +317,8 @@ def favourite(request):
 #      files=None
 #      folders=None
 #     return render(request, 'file_share/home1.html', context)
-# def allusers(request):
-#     all_users = User.objects.all()
-#     current_user = request.user
-#     return render(request, 'file_share/users.html', {'all_users': all_users, 'current_user': current_user})
-# def My_Files(request):
-#     user = request.user
-#     all_files = File.objects.filter(user=user)
-#     all_folders = Folder.objects.filter(user=user)
-#     top_folder = all_folders.filter(linkedfolder__isnull=True)
-#     top_file = all_files.filter(folder__isnull=True)
-#     f = fav.objects.filter(user=request.user)
-#     files = f
 
-#     fi = set(())
-#     fold = set(())
-#     for i in range(len(files)):
-#         if files[i].sfile:
-#             fi.add(files[i].sfile.id)
-#         elif files[i].sfolder:
-#             fold.add(files[i].sfolder.id)
 
-#     favfiles = []
-#     notfavfiles = []
-#     favfolders = []
-#     notfavfolders = []
-#     for i in range(len(top_file)):
-#         if top_file[i].id in fi:
-#             favfiles.append(top_file[i])
-#         else:
-#             notfavfiles.append(top_file[i])
-#     for i in range(len(top_folder)):
-#         if top_folder[i].id in fold:
-#             favfolders.append(top_folder[i])
-#         else:
-#             notfavfolders.append(top_folder[i])
-#     context = {'all_files': favfiles, 'notfav':notfavfiles,'all_folders': favfolders,'notfavfolders':notfavfolders}
-
-#     return render(request, 'file_share/MY_Files.html', context)
-# def uploadfile(request):
-#     if request.method =='POST':
-
-#             form = DocumentForm(request.POST, request.FILES)
-
-#             if form.is_valid():
-#                 for field in request.FILES.keys():
-#                     for formfile in request.FILES.getlist(field):
-#                         f = File(file=formfile, user=request.user)
-#                         f.name = f.filename()
-#                         f.save()
-#                 return redirect('file_share:My_Files')
-#             else:
-#                 return render(request, 'file_share/uploadfile.html', {'form': form})
-#     else:
-#             form = DocumentForm(None)
-#             return render(request, 'file_share/uploadfile.html', {'form': form})
-# def uploadlinkedfile(request,pk):
-#     if request.method == 'POST':
-
-#         form = DocumentForm(request.POST, request.FILES)
-
-#         if form.is_valid():
-#             for field in request.FILES.keys():
-#                 for formfile in request.FILES.getlist(field):
-#                     f = File(file=formfile, user=request.user)
-#                     f.name = f.filename()
-#                     f.folder=Folder.objects.get(pk=pk)
-#                     f.save()
-#                     return redirect('file_share:user-linked-files', pk)
-#         else:
-#             return render(request, 'file_share/uploadfile.html', {'form': form})
-#     else:
-#         form = DocumentForm(None)
-#         return render(request, 'file_share/uploadfile.html', {'form': form})
-# class FileDelete(DeleteView):
-#     model = File
-
-#     def get_success_url(self):
-#         f = File.objects.get(pk=self.kwargs['pk'])
-#         folder = f.folder
-#         if not folder:
-#             return reverse('file_share:My_Files')
-#         else:
-#             return reverse_lazy('file_share:user-linked-files',kwargs={'folder_id': folder.pk})
-
-#     def get(self, *args, **kwargs):
-#             return self.post(*args, **kwargs)
 
 
 # class FolderDelete(DeleteView):
@@ -699,3 +686,92 @@ def favourite(request):
 
 
 #     return zf
+
+
+# def starredfile(request,pk):
+#     file=File.objects.get(pk=pk)
+#     user = file.user
+#     try:
+#         f=fav.objects.get(user=request.user,sfile_id=file.id)
+
+#     except fav.DoesNotExist:
+#         f = fav(user=request.user, sfile_id=file.id)
+#         f.save()
+#     folder=file.folder
+#     if not folder:
+#      if user==request.user:
+#         return redirect('file_share:My_Files')
+#      else :
+#         return redirect('file_share:ousersfiles',user)
+#     else:
+#      if user==request.user:
+#         return redirect('file_share:user-linked-files',folder.pk)
+#      else :
+#         return redirect('file_share:detail', folder.pk)
+# def starredfolder(request,pk):
+
+#     folder = Folder.objects.get(pk=pk)
+#     user1 = folder.user
+#     try:
+#         f = fav.objects.get(user=request.user, sfolder_id=folder.id)
+
+#     except fav.DoesNotExist:
+#         f = fav(user=request.user, sfolder_id=folder.id)
+#         f.save()
+
+#     linkfolder = folder.linkedfolder
+
+#     f.save()
+
+#     if not linkfolder:
+#          if user1==request.user:
+#            return redirect('file_share:My_Files')
+#          else :
+#            return redirect('file_share:ousersfiles',user1)
+#     else:
+#         if user1==request.user:
+#          return redirect('file_share:user-linked-files',linkfolder.pk)
+#         else :
+#          return redirect('file_share:detail', linkfolder.pk)
+# def removestar(request,pk):
+#     file = File.objects.get(pk=pk)
+#     f=fav.objects.filter(user=request.user,sfile=file.id)
+#     f.delete()
+#     return redirect('file_share:home1')
+# def removestarfolder(request,pk):
+#     folder = Folder.objects.get(pk=pk)
+#     f = fav.objects.filter(user=request.user, sfolder=folder.id)
+#     f.delete()
+#     return redirect('file_share:home1')
+# def removestarstay(request,pk):
+#     file = File.objects.get(pk=pk)
+#     folder=file.folder
+#     user=file.user
+#     f = fav.objects.filter(user=request.user, sfile=file.id)
+#     f.delete()
+#     if not folder:
+#          if user==request.user:
+#            return redirect('file_share:My_Files')
+#          else :
+#            return redirect('file_share:ousersfiles',folder.user)
+#     else:
+#         if user==request.user:
+#          return redirect('file_share:user-linked-files',folder.pk)
+#         else :
+#          return redirect('file_share:detail', folder.pk)
+# def removestarstayfolder(request,pk):
+#     f = Folder.objects.get(pk=pk)
+#     folder = f.linkedfolder
+#     user=f.user
+#     foli = fav.objects.filter(user=request.user, sfolder=f.id)
+#     foli.delete()
+#     if not folder:
+#          if user==request.user:
+#            return redirect('file_share:My_Files')
+#          else :
+#            return redirect('file_share:ousersfiles',user)
+#     else:
+#         if user==request.user:
+#          return redirect('file_share:user-linked-files',folder.pk)
+#         else :
+#          return redirect('file_share:detail', folder.pk)

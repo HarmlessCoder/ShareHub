@@ -8,10 +8,16 @@ urlpatterns = [
     path('about/', views.about,name='About'),
     path('home/', views.home,name='home'),
     path('myfiles/',views.myfiles,name='myfiles'),
-    path('allusers/',views.allusers,name='allusers'),
+    path('otherusers/',views.otherusers,name='otherusers'),
     path('favourites/',views.favourite,name='favourites'),
-    # path('profile/',views.profile,name='profile'),
-
+    path('upload/', views.upload_file, name='file_upload'),
+    path('delete/<int:file_id>/', views.delete_file, name='file_delete'),
+    path('preview/<int:file_id>/', views.preview_file, name='file_preview'),
+    path('download/<int:file_id>/', views.download_file, name='file_download'),
+    # path('myfiles/', views.myfiles, name='myfiles'),
+    path('make_private/<int:file_id>/', views.make_private, name='make_private'),
+    path('make_public/<int:file_id>/', views.make_public, name='make_public'),
+]
     # path('home/', views.home,name='home'),
     # path('home1',views.home1,name='home1'),
     # path('uploadfile',views.uploadfile,name='uploadfile'),
@@ -34,5 +40,5 @@ urlpatterns = [
     # path('starfolder/<int:pk>/',views.starredfolder,name='starredfolder'),
     # path('folder/remove/<int:pk>/',views.removestarfolder,name='removestarfolder'),
     # path('folder/stay/<int:pk>/',views.removestarstayfolder,name='removestayfolder'),
-]
+
 

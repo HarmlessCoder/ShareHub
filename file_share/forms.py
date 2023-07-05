@@ -1,5 +1,6 @@
 from django import forms
-from .models import File,Folder
+from .models import File
+# from .models import File,Folder
 
 class MultipleFileInput(forms.ClearableFileInput):
     allow_multiple_selected = True
@@ -16,24 +17,29 @@ class MultipleFileField(forms.FileField):
         else:
             result = single_file_clean(data, initial)
         return result
-    
-class DocumentForm(forms.ModelForm):
-    file = MultipleFileField()
+  
+class FileForm(forms.ModelForm):
     class Meta:
         model = File
-        fields = ('file', )
+        fields = ('file','is_private')
+                  
+# class DocumentForm(forms.ModelForm):
+#     file = MultipleFileField()
+#     class Meta:
+#         model = File
+#         fields = ('file', )
 
 
-class FolderForm(forms.ModelForm):
-    name=forms.CharField(max_length=100)
-    class Meta:
-        model = Folder
-        fields = ['name']
+# class FolderForm(forms.ModelForm):
+#     name=forms.CharField(max_length=100)
+#     class Meta:
+#         model = Folder
+#         fields = ['name']
 
 
-class FolderUploadForm(forms.ModelForm):
-    # file = forms.FileField(widget=forms.MultipleFileInput(attrs={'multiple': True, 'webkitdirectory': True, 'directory': True}))
-    file = MultipleFileField(widget=forms.ClearableFileInput(attrs={'webkitdirectory': True, 'directory': True}))
-    class Meta:
-        model = Folder
-        fields = ['file',]
+# class FolderUploadForm(forms.ModelForm):
+#     # file = forms.FileField(widget=forms.MultipleFileInput(attrs={'multiple': True, 'webkitdirectory': True, 'directory': True}))
+#     file = MultipleFileField(widget=forms.ClearableFileInput(attrs={'webkitdirectory': True, 'directory': True}))
+#     class Meta:
+#         model = Folder
+#         fields = ['file',]
