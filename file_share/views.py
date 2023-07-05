@@ -42,7 +42,7 @@ def upload_file(request):
             return redirect('file_share:myfiles')
     else:
         form = FileForm()
-    return render(request, 'upload_file.html', {'form': form})
+    return render(request, 'file_share/upload_file.html', {'form': form})
 
 def delete_file(request, file_id):
     file = File.objects.get(id=file_id)

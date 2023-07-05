@@ -98,21 +98,24 @@
                 
             </ul>
             <h3>My Files</h3>
+            <a href="{% url 'file_share:upload_file'%}" class="btn btn-success">Upload File</a>
+            {% block upload_file_content%}
+            {% endblock %}
             {% for file in files %}
             <div class="file-item">
             <p>File Name: {{ file.file.name }}</p>
             <p>Uploaded At: {{ file.uploaded_at }}</p>
             {% if file.is_private %}
                 <p>Privacy: Private
-                <a href="{% url 'file_share:make_public' file.id %}" class="btn btn-success">Make Public</a>
+                <a href="{% url 'file_share:make_public' file.id %}" class="btn btn-primary">Make Public</a>
                 </p>
             {% else %}
                 <p>Privacy: Public
-                <a href="{% url 'file_share:make_private' file.id %}" class="btn btn-warning">Make Private</a>
+                <a href="{% url 'file_share:make_private' file.id %}" class="btn btn-primary">Make Private</a>
                 </p>
             {% endif %}
             <div class="file-actions">
-                <a href="{% url 'file_share:file_download' file.id %}" class="btn btn-primary">Download</a>
+                <a href="{% url 'file_share:file_download' file.id %}" class="btn btn-success">Download</a>
                 <a href="{% url 'file_share:file_preview' file.id %}" class="btn btn-secondary">Preview</a>
                 <a href="{% url 'file_share:file_delete' file.id %}" class="btn btn-danger">Delete</a>
             </div>
