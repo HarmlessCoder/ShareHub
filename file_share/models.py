@@ -28,6 +28,7 @@ class File(models.Model):
     file = models.FileField(upload_to=user_directory_path)
     uploaded_at = models.DateTimeField(auto_now_add=True)
     is_private = models.BooleanField(default=False)
+    is_fav = models.ManyToManyField(User,related_name='favorite_files')
 
     def __str__(self):
         return self.file.name

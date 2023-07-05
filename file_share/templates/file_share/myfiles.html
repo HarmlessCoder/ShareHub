@@ -118,6 +118,12 @@
                 <a href="{% url 'file_share:file_download' file.id %}" class="btn btn-success">Download</a>
                 <a href="{% url 'file_share:file_preview' file.id %}" class="btn btn-secondary">Preview</a>
                 <a href="{% url 'file_share:file_delete' file.id %}" class="btn btn-danger">Delete</a>
+                {% if request.user in file.is_fav.all %}
+                    <a href="{% url 'file_share:remove_fav' file.id %}" class="btn btn-primary">Remove from Favorites</a>
+                {% else %}
+                    <a href="{% url 'file_share:add_fav' file.id %}" class="btn btn-primary">Add to Favorites</a>
+                {% endif %}
+                
             </div>
             </div>
         {% empty %}

@@ -9,7 +9,7 @@ urlpatterns = [
     path('home/', views.home,name='home'),
     path('myfiles/',views.myfiles,name='myfiles'),
     path('otherusers/',views.otherusers,name='otherusers'),
-    path('favourites/',views.favourite,name='favourites'),
+    path('favourites/',views.favourites,name='favourites'),
     path('upload_file/', views.upload_file, name='upload_file'),
     path('delete/<int:file_id>/', views.delete_file, name='file_delete'),
     path('preview/<int:file_id>/', views.preview_file, name='file_preview'),
@@ -17,6 +17,8 @@ urlpatterns = [
     # path('myfiles/', views.myfiles, name='myfiles'),
     path('make_private/<int:file_id>/', views.make_private, name='make_private'),
     path('make_public/<int:file_id>/', views.make_public, name='make_public'),
+    path('add_fav/<int:file_id>/', views.add_fav, name='add_fav'),
+    path('remove_fav/<int:file_id>/', views.remove_fav, name='remove_fav'),
 ]
     # path('home/', views.home,name='home'),
     # path('home1',views.home1,name='home1'),

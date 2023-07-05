@@ -98,6 +98,37 @@
                 
             </ul>
             <h3>Favourites</h3>
+            {% for file in files %}
+            
+            <div class="file-item">
+            <p>File Name: {{ file.file.name }}</p>
+            <p>Uploaded At: {{ file.uploaded_at }}</p>
+            {% comment %} {% if file.is_private %}
+                <p>Privacy: Private
+                <a href="{% url 'file_share:make_public' file.id %}" class="btn btn-primary">Make Public</a>
+                </p>
+            {% else %}
+                <p>Privacy: Public
+                <a href="{% url 'file_share:make_private' file.id %}" class="btn btn-primary">Make Private</a>
+                </p>
+            {% endif %} {% endcomment %}
+            <div class="file-actions">
+                <a href="{% url 'file_share:file_download' file.id %}" class="btn btn-success">Download</a>
+                <a href="{% url 'file_share:file_preview' file.id %}" class="btn btn-secondary">Preview</a>
+                <a href="{% url 'file_share:file_delete' file.id %}" class="btn btn-danger">Delete</a>
+                
+                    {% comment %} <p>Privacy: Private {% endcomment %}
+                <a href="{% url 'file_share:remove_fav' file.id %}" class="btn btn-primary">Remove from Favourites</a>
+                    {% comment %} </p> {% endcomment %}
+                
+                
+            </div>
+            </div>
+            
+        {% empty %}
+            <p>No favourites files found.</p>
+        
+        {% endfor %}
             
         </div>
     </div>

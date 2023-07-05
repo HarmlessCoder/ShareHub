@@ -84,6 +84,20 @@ def make_public(request, file_id):
     file.save()
     return redirect('file_share:myfiles')
 
+@login_required
+def add_fav(request, file_id):
+    file = get_object_or_404(File, id=file_id)
+    file.is_fav.add(request.user)
+    # file.save()
+    return redirect('file_share:myfiles')
+
+@login_required
+def remove_fav(request, file_id):
+    file = get_object_or_404(File, id=file_id)
+    file.is_fav.remove(request.user)
+    # file.save()
+    return redirect(request.META.get('HTTP_REFERER'))
+
 # def allusers(request):
 #     all_users = User.objects.all()
 #     current_user = request.user
@@ -95,10 +109,15 @@ def otherusers(request):
     context = {'ousers':ousers}
     return render(request,'file_share/otherusers.html',context)
 
-def favourite(request):
-    return render(request,'file_share/favourites.html',{'title' : 'favourites'})
 
-
+@login_required
+def favourites(request):
+    files=request.user.favorite_files.all()
+    context = {
+        'files':files,
+        'title':'Favourites',
+    }
+    return render(request,'file_share/favourites.html',context)
 
 
 
