@@ -100,7 +100,7 @@
             </ul>
             {% for user in ousers %}
             <div class="content-section">
-                
+                <a href="{% url 'file_share:ousersfiles' user.id %}"class="active">
                 <div class="media">
                     <img class="rounded-circle user-img" src={{user.profile.image.url}} alt ="Profile Picture">
                     <div class="media-body">
@@ -108,6 +108,7 @@
                     <p class="text-secondary">{{user.email}}</p>
                     </div>
                 </div>
+                </a>
             </div>
             {% endfor %} 
 

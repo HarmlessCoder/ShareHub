@@ -19,6 +19,7 @@ urlpatterns = [
     path('make_public/<int:file_id>/', views.make_public, name='make_public'),
     path('add_fav/<int:file_id>/', views.add_fav, name='add_fav'),
     path('remove_fav/<int:file_id>/', views.remove_fav, name='remove_fav'),
+    path('otherusers/<int:user_id>/files/', views.ousersfiles, name='ousersfiles'),
 ]
     # path('home/', views.home,name='home'),
     # path('home1',views.home1,name='home1'),

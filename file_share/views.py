@@ -89,7 +89,7 @@ def add_fav(request, file_id):
     file = get_object_or_404(File, id=file_id)
     file.is_fav.add(request.user)
     # file.save()
-    return redirect('file_share:myfiles')
+    return redirect(request.META.get('HTTP_REFERER'))
 
 @login_required
 def remove_fav(request, file_id):
@@ -109,6 +109,10 @@ def otherusers(request):
     context = {'ousers':ousers}
     return render(request,'file_share/otherusers.html',context)
 
+def ousersfiles(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    files = File.objects.filter(user=user)
+    return render(request, 'file_share/ousersfiles.html', {'files': files, 'user': user})
 
 @login_required
 def favourites(request):

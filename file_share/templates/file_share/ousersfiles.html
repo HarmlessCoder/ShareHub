@@ -1,0 +1,20 @@
+{% extends 'file_share/base.html' %}
+{% block content %}
+<h2>User: {{ user.username }}</h2>
+{% for file in files %}
+<div class="file-item">
+    <p>File Name: {{ file.file.name }}</p>
+    <p>Uploaded At: {{ file.uploaded_at }}</p>
+    <div class="file-actions">
+        <a href="{% url 'file_share:file_download' file.id %}" class="btn btn-success">Download</a>
+        <a class="list-group-item-text" href="{{ file.file.url }}" target="_blank" class="btn btn-secondary">Preview</a>
+        {% comment %} <a href="{% url 'file_share:file_delete' file.id %}" class="btn btn-danger">Delete</a> {% endcomment %}
+        {% if request.user in file.is_fav.all %}
+            <a href="{% url 'file_share:remove_fav' file.id %}" class="btn btn-primary">Remove from Favorites</a>
+        {% else %}
+            <a href="{% url 'file_share:add_fav' file.id %}" class="btn btn-primary">Add to Favorites</a>
+        {% endif %}
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

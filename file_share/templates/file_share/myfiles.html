@@ -97,8 +97,8 @@
                 <li><h5>Responsive</h5> shrinks in width, hides text labels and collapses to icons only on mobile</li>
                 
             </ul>
-            <h3>My Files</h3>
-            <a href="{% url 'file_share:upload_file'%}" class="btn btn-success">Upload File</a>
+            <h3>My Files  <a href="{% url 'file_share:upload_file'%}" class="btn btn-success">Upload File</a></h3>
+            
             {% block upload_file_content%}
             {% endblock %}
             {% for file in files %}
@@ -116,7 +116,7 @@
             {% endif %}
             <div class="file-actions">
                 <a href="{% url 'file_share:file_download' file.id %}" class="btn btn-success">Download</a>
-                <a href="{% url 'file_share:file_preview' file.id %}" class="btn btn-secondary">Preview</a>
+                <a class="list-group-item-text" href="{{ file.file.url }}" target="_blank"><button type="button" class="btn btn-secondary">Preview</button> </a>
                 <a href="{% url 'file_share:file_delete' file.id %}" class="btn btn-danger">Delete</a>
                 {% if request.user in file.is_fav.all %}
                     <a href="{% url 'file_share:remove_fav' file.id %}" class="btn btn-primary">Remove from Favorites</a>
