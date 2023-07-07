@@ -13,10 +13,12 @@ from django.utils.text import slugify
 
 
 def landing_page(request):
-
-    # auth.logout(request)
-    # logout(request)
     return render(request,'users/landing_page.html')
+
+
+def preview_file(request, file_id):
+    file = get_object_or_404(AllFiles, id=file_id)
+    return render(request, 'preview_file.html', {'file': file})
 
 @login_required
 def create_folder(request, parent_folder_id=None):

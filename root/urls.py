@@ -22,6 +22,7 @@ urlpatterns =[
     path('toggle_favorite/<str:model>/<int:pk>/', toggle_favorite , name='toggle_favorite'),
     path('folder_upload/<int:pk>/', FolderUpload, name='folder_upload'),
     path('folder_upload_index/', FolderUploadIndex, name='folder-upload-index'),
+    path('preview/<int:file_id>/', views.preview_file, name='file_preview'),
 ]
 
 if settings.DEBUG:
