@@ -55,7 +55,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'FiShare.urls'
+ROOT_URLCONF = 'ShareHub.urls'
 
 TEMPLATES = [
     {
@@ -73,7 +73,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'FiShare.wsgi.application'
+WSGI_APPLICATION = 'ShareHub.wsgi.application'
 
 
 # Database
