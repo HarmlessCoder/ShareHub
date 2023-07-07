@@ -1,146 +1,68 @@
-{% load static %}
+{% extends "root/base.html" %}
 {% load crispy_forms_tags %}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{% static 'file_share/base.css' %}">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'file_share/main.css'%}"> {% endcomment %}
-    {% if title %}
-        <title>ShareHub - {{ title }}</title>
-    {% else %}
-        <title>ShareHub</title>
-    {% endif %}
-</head>
+{% block content %}
 
-<body>
-  <div class="container-fluid">
-    <div class="row flex-nowrap">
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 " id="side_navbar">
-            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-                <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none" id ="logo_heading">
-                    {% comment %} <span class="fs-5 d-none d-sm-inline">SHAREHUB</span> {% endcomment %}
-                    <img class="logo" src="{% static 'file_share/logo.png' %}" alt="Logo" height="50">
-                    <h2 class ="logo_name bold">ShareHub</h2>
-                    <hr>
-                </a>
-                
-                <ul class="sidebar_items nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                    <li class="nav-item">
-                        <a href="/home" class="pl-3 sidebar_list nav-link align-middle px-0">
-                          <i class="fs-4 bi-house-fill"></i> <span class="ms-2 d-none d-sm-inline">Home</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/myfiles" class="pl-3 nav-link px-0 align-middle">
-                            <i class="sidebar_list fs-4 bi-file-earmark-fill"></i> <span class="ms-2 d-none d-sm-inline">My Files</span> </a>
-          
-                    </li>
-                    <li>
-                        <a href="/favourites" class="pl-3 nav-link px-0 align-middle">
-                            <i class="sidebar_list fs-4 bi-star-fill"></i> <span class="ms-2 d-none d-sm-inline">Favourites</span></a>
-                    </li>
-
-                    <li>
-                        <a href="/otherusers" class="pl-3 nav-link px-0 align-middle">
-                            <i class="sidebar_list fs-4 bi-people-fill"></i> <span class="ms-2 d-none d-sm-inline">Other Users</span></a>
-                        
-                    </li>
-                    <li class = "active">
-                        <a href="{% url 'profile' %}" class="pl-3 nav-link px-0 align-middle">
-                            <i class="sidebar_list fs-4 bi-person-vcard-fill"></i> <span class="ms-2 d-none d-sm-inline">My Profile</span> </a>
-                            
-                    </li>
-                </ul>
-
-                <hr>
-                <div class="dropdown pb-4">
-                    <a href="#" class="pl-3 d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src={{user.profile.image.url}} alt="profile Pic" width="45" height="45" class="rounded-circle">
-                        <span class="d-none d-sm-inline mx-1">{{ user.username }}</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-secondary text-small shadow" aria-labelledby="dropdownUser1">
-                        <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="{% url 'logout' %}">Log out</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="rightmaindiv col py-3">
-            <h3>Left Sidebar with Submenus</h3>
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-{{message.tags}}">
-                        {{message}}
-                    </div>
-                {% endfor %}
-            {% endif %}
-            
-            <p class="lead">
-                An example 2-level sidebar with collasible menu items. The menu functions like an "accordion" where only a single 
-                menu is be open at a time. While the sidebar itself is not toggle-able, it does responsively shrink in width on smaller screens.</p>
-            <ul class="list-unstyled">
-                <li><h5>Responsive</h5> shrinks in width, hides text labels and collapses to icons only on mobile</li>
-                <h1>profile Section</h1>
-                <h2>{{user.username}}</h2>
-                <div class="content-section">
-                    <div class="media">
-                      <img class="rounded-circle account-img" src={{user.profile.image.url}} alt ="Profile Picture">
-                      <div class="media-body">
-                        <h2 class="account-heading">{{user.username}}</h2>
-                        <p class="text-secondary">{{user.email}}</p>
-                      </div>
-                    </div>
-                    <form method="POST" enctype="multipart/form-data">
-                      {% csrf_token %}
-                      <fieldset class="form-group">
-                          <legend class="border-bottom mb-2">Profile Info</legend>
-                          {{ u_form|crispy }}
-                          {{ p_form|crispy }}
-                      </fieldset>
-                      <div class="form-group">
-                          <button type="submit" class="btn btn-primary">Update</button>
-                      </div>
-                    </form>
+<section class="py-5 my-5">
+  <div class="container">
+    <h1 class="mb-5">My Profile</h1>
+    <div class="bg-white shadow rounded-lg d-block d-sm-flex">
+      <div class="profile-tab-nav border-right">
+        <div class="p-4">
+          <div class="img-circle text-center mb-3">
+            <img src="{{ user.profile.image.url }}" alt="Image" class="shadow" />
+          </div>
+          <h4 class="text-center">{{ user.username }}</h4>
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="id_image" class="btn btn-outline-info">
+                      Choose Profile
+                      <input type="file" name="image" accept="image/*" style="display: none;" id="id_image">
+                    </label>
                   </div>
-                {% comment %} {% for post in posts %}
-                    <article class="media content-section">
-                        <div class="media-body">
-                        <div class="article-metadata">
-                            <a class="mr-2" href="#">{{ post.author }}</a>
-                            <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
-                        </div>
-                        <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
-                        <p class="article-content">{{ post.content }}</p>
-                        </div>
-                    </article>
-                {% endfor %} {% endcomment %}
-            </ul>
-            
+                </div>
+              </div>
+            </fieldset>
+            <div class="form-group">
+              <p></p>
+              <button class="btn btn-primary" type="submit">Update</button>
+            </div>
+          </form>
         </div>
+      </div>
+      <div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
+        <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
+          <h3 class="mb-4">Account Info</h3>
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+              <legend class="border-bottom mb-4">Edit Changes</legend>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="id_username">Username</label>
+                    <input type="text" name="username" value="{{ user.username }}" maxlength="150" class="form-control custom-width ">
+                  </div>
+                  <div class="form-group">
+                    <label for="id_email">Email</label>
+                    <input type="email" name="email" value="{{ user.email }}" class="form-control custom-width ">
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+            <div class="form-group">
+              <p></p>
+              <button class="btn btn-primary" type="submit">Update</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-</div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    {% comment %} <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> {% endcomment %}
-</body>
-</html>
+  </div>
+</section>
 
-
+{% endblock content %}

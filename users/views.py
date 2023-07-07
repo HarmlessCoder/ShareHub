@@ -40,16 +40,9 @@ def register(request):
         form = UserRegistrationForm()
     return render (request, 'users/register.html',{'form':form})
 
-
-# def profiles(request):
-#     if request.method=='POST':
-#       form=profilecreate(request.POST,request.FILES)
-#       if form.is_valid():
-#         g=form.save(commit=False)
-#         g.owner=get_object_or_404(User,id=request.user.id)
-#         p1=profile(image=g.image,profilename=g.profilename,DOB=g.DOB,college=g.college,owner=g.owner)
-#         p1.save()
-#         return redirect('createdprofile')
+def user_list(request):
+    users = User.objects.all()
+    return render(request, 'users/all_users.html', {'users': users})
 
 @login_required
 def profile(request):
