@@ -10,6 +10,7 @@
     <title>ShareHub</title>
     {% endif %}
     <!-- bootstrap 5 css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css"
@@ -36,34 +37,46 @@
       class="navbar navbar-expand d-flex flex-column align-item-start active-nav"
       id="sidebar"
     >
-      <a href="#" class="navbar-brand text-light mt-5">
+      <a href="#" class="navbar-brand text-light mt-3">
         
-        <div class="display-5 font-weight-bold">ShareHub</div>
+        <div class="display-5 font-weight-bold"> ShareHub</div>
       </a>
       <ul class="navbar-nav d-flex flex-column mt-5 w-100">
+        
         <li class="nav-item w-100">
-          <a href="{% url 'home'%}" class="nav-link text-light pl-4">Home</a>
+          <a href="{% url 'home'%}" class="{% if request.path == '/home/' %} active_tab{% endif %} nav-link text-light pl-4"><i class="fs-4 bi-house-fill"></i>  Home</a>
         </li>
         <li class="nav-item w-100">
-          <a href="{% url 'all_files'%}" class="nav-link text-light pl-4"
-            >My Files</a
+          
+          <a href="{% url 'all_files'%}" class="{% if request.path == '/my_files/' %} active_tab{% endif %} nav-link text-light pl-4"
+            ><i class="sidebar_list fs-4 bi-file-earmark-fill"></i>  My Files</a
           >
         </li>
         <li class="nav-item w-100">
-          <a href="{% url 'all_users'%}" class="nav-link text-light pl-4"
-            >Users</a
+          <a href="{% url 'all_users'%}" class="{% if request.path == '/all_users/' %} active_tab{% endif %}  nav-link text-light pl-4"
+            ><i class="sidebar_list fs-4 bi-people-fill"></i> Users</a
           >
         </li>
         <li class="nav-item w-100">
-          <a href="{% url 'profile'%}" class="nav-link text-light pl-4"
-            >Profile</a
+          <a href="{% url 'profile'%}" class="{% if request.path == '/profile/' %} active_tab{% endif %} nav-link text-light pl-4"
+            ><i class="sidebar_list fs-4 bi-person-vcard-fill"></i> Profile</a
           >
         </li>
         <li class="nav-item w-100">
           <a href="{% url 'logout'%}" class="nav-link text-light pl-4"
-            >Logout</a
+            ><i class="bi bi-box-arrow-left"></i> Logout</a
           >
         </li>
+        <li class="nav-item w-100">
+              
+        </li>
+        
+        <li class="nav-item profile_img w-100">
+          <a href="{% url 'profile'%}" class="nav-link text-light pl-5"
+            ><img src={{user.profile.image.url}} alt="profile Pic" width="45" height="45" class="rounded-circle"> {{user.username}}</a
+          >
+        </li>
+
         <!-- <li class="nav-item dropdown w-100">
                 <a href="#" class="nav-link dropdown-toggle text-light pl-4" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">Service</a>
                 <ul class="dropdown-menu w-100" aria-labelledby="navbarDropdown">
@@ -73,6 +86,19 @@
                 </ul>
             </li> -->
       </ul>
+      {% comment %} <div class="dropdown pb-4">
+                    <a href="#" class="pl-3 d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src={{user.profile.image.url}} alt="profile Pic" width="45" height="45" class="rounded-circle">
+                        <span class="d-none d-sm-inline mx-1">{{ user.username }}</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-secondary text-small shadow" aria-labelledby="dropdownUser1">
+                        <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Log out</a></li>
+                    </ul>
+                </div> {% endcomment %}
     </nav>
     <section class="p-4 my-container active-cont">
       <button class="btn my-4" id="menu-btn">Toggle Sidebar</button>

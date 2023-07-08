@@ -23,6 +23,10 @@ urlpatterns =[
     path('folder_upload/<int:pk>/', FolderUpload, name='folder_upload'),
     path('folder_upload_index/', FolderUploadIndex, name='folder-upload-index'),
     path('preview/<int:file_id>/', views.preview_file, name='file_preview'),
+    path('make_private/<int:file_id>/', views.make_private, name='make_private'),
+    path('make_public/<int:file_id>/', views.make_public, name='make_public'),
+    path('make_folder_private/<int:folder_id>/', views.make_folder_private, name='make_folder_private'),
+    path('make_folder_public/<int:folder_id>/', views.make_folder_public, name='make_folder_public'),
 ]
 
 if settings.DEBUG:

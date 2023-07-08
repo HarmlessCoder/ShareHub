@@ -17,6 +17,7 @@ body {
     /* background-color: #45bbff; */
     background-image: url("landing_page_bg.jpg");
     transition: 0.4s;
+    border-right: 10px solid rgba(7, 51, 116, 0.677);
 }
 
 .nav-link {
@@ -27,6 +28,7 @@ body {
 .nav-link:focus,
 .nav-link:hover {
     background-color: #ffffff26;
+    /* background-color: #fbf9f9; */
 }
 
 .dropdown-menu {
@@ -235,7 +237,9 @@ body {
   
   /* Dropdown styles */
 
-
+  .dropdown1{
+    margin-bottom: 5px;
+  }
 
 
   
@@ -361,4 +365,15 @@ body {
     padding: 20px;
   }
   
-  
+  .profile_img{
+    margin-top: 290px;
+    /* margin-bottom: 10px; */
+  }
+
+  .active_tab{
+    background-color: #ffffff26;
+  }
+
+  .navbar-brand{
+    margin-left: 17px;
+  }

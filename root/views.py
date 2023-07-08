@@ -41,12 +41,22 @@ def create_folder(request, parent_folder_id=None):
         form = FolderForm()
     return render(request, 'root/create_folder.html', {'folderform': form})
 
+# @login_required
+# def favourites(request):
+#     files=request.user.favorite_files.all()
+#     context = {
+#         'files':files,
+#         'title':'Favourites',
+#     }
+#     return render(request,'file_share/favourites.html',context)
 
 @login_required
 def home(request):
     logged_user=request.user
-    favorite_files = AllFiles.objects.filter(is_favorite=True,folder=None,owner=logged_user)
-    favorite_folders = Folder.objects.filter(is_favorite=True, parent_folder=None,user=logged_user)
+    favorite_files = request.user.favorite_files.filter(folder=None)
+    # favorite_files = AllFiles.objects.filter(is_favorite=True,folder=None,owner=logged_user)
+    # favorite_folders = Folder.objects.filter(is_favorite=True, parent_folder=None,user=logged_user)
+    favorite_folders = request.user.favorite_folders.filter(parent_folder=None)
     context = {
         'files': favorite_files,
         'folders': favorite_folders,
@@ -265,26 +275,81 @@ def FolderUploadIndex(request):
         return render(request,'root/folder_upload.html',{'form':form})
 
 
+# @login_required
+# def favourites(request):
+#     files=request.user.favorite_files.all()
+#     context = {
+#         'files':files,
+#         'title':'Favourites',
+#     }
+#     return render(request,'file_share/favourites.html',context)
 
 def toggle_favorite(request, model, pk):
-        
-        if model == 'File':
-            item = get_object_or_404(AllFiles, pk=pk)
-        elif model == 'Folder':
-            item = get_object_or_404(Folder, pk=pk)
-        else:
-            return reverse('home')
-        
-        item.is_favorite = not item.is_favorite
-        item.save()
+    if model == 'File':
+        item = get_object_or_404(AllFiles, pk=pk)
+    elif model == 'Folder':
+        item = get_object_or_404(Folder, pk=pk)
+    else:
+        return reverse('home')
 
-        if item.is_favorite:
-            messages.success(request, 'Added to favorites')
-        else:
-            messages.success(request, 'Removed from favorites')
+    if request.user in item.is_favorite.all():
+        item.is_favorite.remove(request.user)
+        messages.success(request, 'Removed from favorites')
+    else:
+        item.is_favorite.add(request.user)
+        messages.success(request, 'Added to favorites')
 
-        # Redirect back to the referring page
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    # Redirect back to the referring page
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required
+def make_private(request, file_id):
+    file = get_object_or_404(AllFiles, id=file_id, owner=request.user)
+    file.is_private = True
+    file.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+@login_required
+def make_public(request, file_id):
+    file = get_object_or_404(AllFiles, id=file_id, owner=request.user)
+    file.is_private = False
+    file.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required
+def make_folder_private(request, folder_id):
+    fol = get_object_or_404(Folder, id=folder_id, owner=request.user)
+    fol.is_private = True
+    fol.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+@login_required
+def make_folder_public(request, folder_id):
+    fol = get_object_or_404(Folder, id=folder_id, owner=request.user)
+    fol.is_private = False
+    fol.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+# def toggle_favorite(request, model, pk):
+        
+#         if model == 'File':
+#             item = get_object_or_404(AllFiles, pk=pk)
+#         elif model == 'Folder':
+#             item = get_object_or_404(Folder, pk=pk)
+#         else:
+#             return reverse('home')
+        
+#         item.is_favorite = not item.is_favorite
+#         item.save()
+
+#         if item.is_favorite:
+#             messages.success(request, 'Added to favorites')
+#         else:
+#             messages.success(request, 'Removed from favorites')
+
+#         # Redirect back to the referring page
+#         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
     # Redirect back to the referring page
     # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

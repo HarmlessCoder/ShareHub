@@ -17,6 +17,7 @@
 <hr class="section-line">
 <div class="file-section">
   {% for post in files %}
+  {% comment %} {% if not post.is_private %} {% endcomment %}
   <article class="media content-section">
     <img class="rounded-circle article-img" 
     src="{{ post.author.profile.image.url }}" />
@@ -42,20 +43,40 @@
               <i class="fa-solid fa-download"></i>
             </a>
           
-            {% with favorite_class=post.is_favorite|yesno:"favpurple,favblue" %}
-            <a href="{% url 'toggle_favorite' 'File' post.id %}" class="btn btn-primary favorite-button square-button {{favorite_class}}">
-              <i class="fa-regular fa-star"></i>
-            </a>
-        {% endwith %}
-          </div>
+              {% if request.user in post.is_favorite.all %}
+                {% with favorite_class='favpurple' %}
+                  <a href="{% url 'toggle_favorite' 'File' post.id %}" class="btn btn-primary favorite-button square-button {{ favorite_class }}">
+                    <i class="bi bi-star-fill"></i>
+                  </a>
+                {% endwith %}
+              {% else %}
+                {% with favorite_class='favpurple' %}
+                  <a href="{% url 'toggle_favorite' 'File' post.id %}" class="btn btn-primary favorite-button square-button {{ favorite_class }}">
+                    <i class="fa-regular fa-star"></i>
+                  </a>
+                {% endwith %}
+              {% endif %}
+              {% if request.user == post.owner %}
+                {% if post.is_private %}
+                <a href="{% url 'make_public' post.id %}" class="btn btn-primary square-button"> <i class="bi bi-lock-fill"></i></a>
+                
+                {% else %}
+                    
+                <a href="{% url 'make_private' post.id %}" class="btn btn-primary"><i class="bi bi-unlock-fill"></i></a>
+                    
+                {% endif %}
+              {% endif %}
+            </div>
           
       <div class="article-metadata">
-        <small class="text-muted">
+        <small class="text-muted d-flex justify-content-center">
             {{ post.created_at|date:"H:i d/m/Y" }}
         </small>
       </div>
     </div>
   </article>
+  {% comment %} {% endif %} {% endcomment %}
+  
   {% endfor %}
 </div>
 
@@ -93,12 +114,24 @@
             border: none;">
               <i class="fa-solid fa-download"></i>
             </a>
-          
-            {% with favorite_class=post.is_favorite|yesno:"favpurple,favblue" %}
-            <a href="{% url 'toggle_favorite' 'Folder' post.id %}" class="btn btn-primary favorite-button square-button {{favorite_class}}">
-              <i class="fa-regular fa-star"></i>
-            </a>
-        {% endwith %}
+            
+            {% if request.user in post.is_favorite.all %}
+                {% with favorite_class='favpurple' %}
+                  <a href="{% url 'toggle_favorite' 'Folder' post.id %}" class="btn btn-primary favorite-button square-button {{ favorite_class }}">
+                    <i class="bi bi-star-fill"></i>
+                  </a>
+                {% endwith %}
+              {% else %}
+                {% with favorite_class='favpurple' %}
+                  <a href="{% url 'toggle_favorite' 'Folder' post.id %}" class="btn btn-primary favorite-button square-button {{ favorite_class }}">
+                    <i class="fa-regular fa-star"></i>
+                  </a>
+                {% endwith %}
+              {% endif %}
+              {% comment %} <a href="{% url 'make_folder_private' post.id %}" class="btn btn-primary square-button"><i class="bi bi-unlock-fill"></i></a> {% endcomment %}
+              
+              
+              
           </div>
           
     </div>
