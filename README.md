@@ -59,9 +59,9 @@ Users are directed to a register on opening the website. After the registering, 
 ### Other Users Files
 * In the above page 'All users' clicking on each user we can get the files and folders uploaded by the respective user.
 
-![other](https://user-images.githubusercontent.com/83218497/177514091-990fc1d7-471e-46e9-803f-455a0338aa8c.png)
+![other](https://raw.githubusercontent.com/HarmlessCoder/ShareHub/main/assets/Screenshot%20(2141).png?token=GHSAT0AAAAAACEJ43AXWDCKHRM6G32PNHMMZFLG34Q)
 
 ### My Profile Page
 * In the side navigation bar we can see 'My Profile Page', where user can see his profile.
 
-![profile](https://user-images.githubusercontent.com/83218497/177513622-bae24a3f-0452-4e03-875c-15d901559334.png)
+![profile](https://raw.githubusercontent.com/HarmlessCoder/ShareHub/main/assets/Screenshot%20(2140).png?token=GHSAT0AAAAAACEJ43AWW4QZTRAYBBN32774ZFLGTWA)
