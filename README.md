@@ -64,4 +64,4 @@ Users are directed to a register on opening the website. After the registering, 
 ### My Profile Page
 * In the side navigation bar we can see 'My Profile Page', where user can see his profile.
 
-![profile](https://raw.githubusercontent.com/HarmlessCoder/ShareHub/main/assets/Screenshot%20(2140).png?token=GHSAT0AAAAAACEJ43AWW4QZTRAYBBN32774ZFLGTWA)
+![profile](https://raw.githubusercontent.com/HarmlessCoder/ShareHub/main/assets/Screenshot%20(2140).png?token=GHSAT0AAAAAACEJ43AWZXE4SEFHUD7WQTLGZFLG66A)
