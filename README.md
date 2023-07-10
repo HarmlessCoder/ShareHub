@@ -28,40 +28,41 @@ Users are directed to a register on opening the website. After the registering, 
 * Users can also keep the files and floders they are interested in as favourites for easier access.
 
 ### Landing Page
-![Screenshot (2133)](https://github.com/HarmlessCoder/ShareHub/assets/95159170/9ded432c-aeb2-43cc-b93f-def0824697b0)
+![Screenshot (2133)](https://github.com/HarmlessCoder/ShareHub/assets/95159170/14d197b0-5d9a-45f1-86b0-24faa3ef51a3)
 
 
 ### Register Page
 * The user has to register when he uses the website for the first time.He can register with any of his   Email ID.
 
-![Screenshot (2136)](https://github.com/HarmlessCoder/ShareHub/assets/95159170/44833d79-abd4-4233-aefc-69fe84c092dd)
+![Screenshot (2136)](https://github.com/HarmlessCoder/ShareHub/assets/95159170/ebc1400b-8b8d-4edc-8be1-baa00a20edde)
  
 ### Login Page
 * The web application is authenticated and a user must sign in using his username created in Register Page.
 
-![Screenshot (2135)](https://github.com/HarmlessCoder/ShareHub/assets/95159170/0b158a7d-bd07-45ab-b103-2bf42847cf18)
+![Screenshot (2135)](https://github.com/HarmlessCoder/ShareHub/assets/95159170/53e131b7-90be-45cc-bd13-e525bfc3c4d4)
 
 ### Home Page
 * After login the home page is displayed, where user can see his favorite files and folders.
 
-![Screenshot (2137)](https://github.com/HarmlessCoder/ShareHub/assets/95159170/0f62fbda-6f85-4eea-af0a-2687c9565de5)
+![Screenshot (2137)](https://github.com/HarmlessCoder/ShareHub/assets/95159170/3c6c39ee-c120-463e-a530-f741b938f9d0)
 
 ### My Files Page
-* In the side navigation bar we can see 'My files', where user can the files and folders uploaded by him.
+* In the side navigation bar we can see 'My files', where user can see the files and folders uploaded by him.
 
-![Screenshot (2138)](https://github.com/HarmlessCoder/ShareHub/assets/95159170/22baa2e5-6fe5-4c77-8a59-cf348ce103a9)
+![Screenshot (2138)](https://github.com/HarmlessCoder/ShareHub/assets/95159170/bbc67701-a95d-4ef7-9100-a2e95c3d9614)
 
 ### All Users Page
 * In the side navigation bar we can see 'All users,' where user can see the profiles of other users, using the website.
 
-![Screenshot (2139)](https://github.com/HarmlessCoder/ShareHub/assets/95159170/a1e5426d-0981-4594-86bc-0b1df85b0ff4)
+![Screenshot (2139)](https://github.com/HarmlessCoder/ShareHub/assets/95159170/6c00e81b-c81f-4719-9622-9c5835989ece)
+
 
 ### Other Users Files
 * In the above page 'All users' clicking on each user we can get the files and folders uploaded by the respective user.
 
-![Screenshot (2141)](https://github.com/HarmlessCoder/ShareHub/assets/95159170/d03abb25-c2b8-4a5d-a012-b15c127070af)
+![Screenshot (2141)](https://github.com/HarmlessCoder/ShareHub/assets/95159170/bffef5c8-ecb7-478f-a3ed-982d7194db5e)
 
 ### My Profile Page
 * In the side navigation bar we can see 'My Profile Page', where user can see his profile.
 
-![Screenshot (2140)](https://github.com/HarmlessCoder/ShareHub/assets/95159170/428b8f44-26d0-4a95-afad-7fd1320dcee9)
+![Screenshot (2140)](https://github.com/HarmlessCoder/ShareHub/assets/95159170/9e71e43c-a4c7-40a4-b68a-579e06eb5918)
